@@ -21,6 +21,8 @@ class Smiley extends Phaser.Scene {
         
         this.counter = 0;
         this.smileType = 'Smile';
+
+        this.pKey = null;
     }
 
     // Use preload to load art and sound assets before the scene starts running.
@@ -35,6 +37,7 @@ class Smiley extends Phaser.Scene {
         this.load.image("smileDimple", "face_c.png");
         // hands
         this.load.image("handOpen", "hand_yellow_open.png");
+        this.load.image("handPeace", "hand_yellow_peace.png");
 
         // update instruction text
         document.getElementById('description').innerHTML = '<h2>Smiley.js</h2>'
@@ -54,15 +57,30 @@ class Smiley extends Phaser.Scene {
         my.sprite.leftOpenHand = this.add.sprite(this.leftHandX, this.lefthandY, "handOpen");
         my.sprite.leftOpenHand.flipX = true;   // flip sprite to have thumb on correct side
         my.sprite.rightOpenHand = this.add.sprite(this.rightHandX, this.rightHandY, "handOpen");
+        my.sprite.rightPeaceHand = this.add.sprite(this.rightHandX, this.rightHandY, "handPeace");
 
         // Since sprites are visible when created and we only want one smile to be shown
         // at a time, make the "dimple" smile not visible to start.
         my.sprite.dimple.visible = false;
+        my.sprite.rightPeaceHand.visible = false;
+
+        this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     }
 
     update() {
         let my = this.my;    // create an alias to this.my for readability
 
+        //Pulling input: peace hand
+        if(this.pKey.isDown) {
+            my.sprite.rightOpenHand.visible = false;
+            my.sprite.rightPeaceHand.visible = true;
+        }
+        if(this.pKey.isUp) {
+            my.sprite.rightOpenHand.visible = true;
+            my.sprite.rightPeaceHand.visible = false;
+        }
+
+        /*
         // Since update is called multiple times/second, this.counter acts like
         // a timer, increasing once per clock tick
         this.counter++;
@@ -85,6 +103,7 @@ class Smiley extends Phaser.Scene {
                     console.log("Error: unknown smile");
             }
         }
+        */
     }
 
 }
