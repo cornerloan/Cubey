@@ -1,3 +1,7 @@
+/*
+    Connor Lowe
+*/
+
 class Smiley extends Phaser.Scene {
     constructor() {
         super("smileyScene");
@@ -23,6 +27,8 @@ class Smiley extends Phaser.Scene {
         this.smileType = 'Smile';
 
         this.pKey = null;
+        this.dKey = null;
+        this.sKey = null;
     }
 
     // Use preload to load art and sound assets before the scene starts running.
@@ -65,6 +71,8 @@ class Smiley extends Phaser.Scene {
         my.sprite.rightPeaceHand.visible = false;
 
         this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     }
 
     update() {
@@ -78,6 +86,19 @@ class Smiley extends Phaser.Scene {
         if(this.pKey.isUp) {
             my.sprite.rightOpenHand.visible = true;
             my.sprite.rightPeaceHand.visible = false;
+        }
+
+
+        //Event input: dimple smile
+        if(Phaser.Input.Keyboard.JustDown(this.dKey)){
+            my.sprite.dimple.visible = true;
+            my.sprite.smile.visible = false;
+        }
+
+        //Event input: regular smile
+        if(Phaser.Input.Keyboard.JustDown(this.sKey)){
+            my.sprite.dimple.visible = false;
+            my.sprite.smile.visible = true;
         }
 
         /*
